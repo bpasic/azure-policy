@@ -1,16 +1,16 @@
-# Create a new policy definition
+# Create policy definition
 $definitionParams = @{
   Name = "DenyVMSku"
   DisplayName = "Deny VM SKU"
   Description = "Deny specific virtual machine SKU"
   Metadata = '{"category":"Compute"}'
-  Parameter = "bp_policy_parameters.json"
-  Policy = "bp_policy_rules.json"
+  Parameter = "policy_parameters.json"
+  Policy = "policy_rules.json"
 }
 
 $definition = New-AzPolicyDefinition @definitionParams
 
-# Create an initiative
+# Create initiative definition
 $policyDefinition = @"
 [
     {
@@ -35,7 +35,7 @@ $initiativeParams = @{
 
 $initiative = New-AzPolicySetDefinition @initiativeParams
 
-# Assign the initiave to the subscription, excluding the resource group
+# Assign initiave to the subscription
 $assignParams = @{
   Name = "DenyVMSkuAssignment"
   DisplayName = "Deny VM SKU Policy Set Assignment"
