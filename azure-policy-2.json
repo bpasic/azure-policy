@@ -1,0 +1,39 @@
+{
+    "properties": {
+        "displayName": "Allowed locations",
+        "description": "Restrict locations allowed for deployments",
+        "mode": "all",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "Compute"
+        },
+        "parameters": {
+            "allowedLocations": {
+                "type": "array",
+                "metadata": {
+                    "description": "The list of locations that can be specified when deploying resources",
+                    "strongType": "location",
+                    "displayName": "Allowed locations"
+                },
+                "allowedValues": [
+                    "westeurope",
+                    "northeurope"
+                ],
+                "defaultValue": [
+                    "westeurope"
+                ]
+            }
+        },
+        "policyRule": {
+            "if": {
+                "not": {
+                    "field": "location",
+                    "in": "[parameters('allowedLocations')]"
+                }
+            },
+            "then": {
+                "effect": "deny"
+            }
+        }
+    }
+}

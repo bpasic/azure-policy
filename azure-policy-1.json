@@ -10,11 +10,6 @@
         "parameters": {
             "skuName": {
                 "type": "string",
-                "defaultValue": "deny",
-                "allowedValues": [
-                    "deny",
-                    "disabled"
-                ],
                 "metadata": {
                     "displayName": "SKU Name",
                     "description": "Name of the virtual machine SKU."
