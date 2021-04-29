@@ -1,0 +1,9 @@
+{
+    "skuName": {
+        "type": "string",
+        "metadata": {
+            "displayName": "SKU Name",
+            "description": "Name of the virtual machine SKU."
+        }
+    }
+}

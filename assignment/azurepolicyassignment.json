@@ -1,0 +1,27 @@
+{
+    "properties": {
+        "displayName": "Contoso governance initiative",
+        "description": "Assign the Contoso governance initiative",
+        "metadata": {
+            "assignedBy": "Cloud Center of Excellence"
+        },
+        "notScopes": [],
+        "policyDefinitionId": "/subscriptions/1d721400-fd3c-4aa7-bf9e-908c913cc8f3/providers/Microsoft.Authorization/policySetDefinitions/ContosoGovernance",
+        "nonComplianceMessages": [
+            {
+                "message": "Not allowed by Contoso governance initiative."
+            }
+        ],
+        "parameters": {
+            "init_skuName": {
+                "value": "Standard_H*"
+            },
+            "init_allowedLocations": {
+                "value": [
+                    "northeurope",
+                    "westeurope"
+                ]
+            }
+        }
+    }
+}

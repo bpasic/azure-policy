@@ -1,0 +1,50 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/policyDefinitions",
+            "name": "AllowedLocations",
+            "apiVersion": "2019-09-01",
+            "properties": {
+                "policyType": "Custom",
+                "mode": "All",
+                "displayName": "Allowed locations",
+                "description": "Restrict locations allowed for deployments",
+                "metadata": {
+                    "category": "Compute"
+                },
+                "parameters": {
+                    "allowedLocations": {
+                        "type": "array",
+                        "metadata": {
+                            "description": "The list of locations that can be specified when deploying resources",
+                            "strongType": "location",
+                            "displayName": "Allowed locations"
+                        },
+                        "allowedValues": [
+                            "westeurope",
+                            "northeurope"
+                        ],
+                        "defaultValue": [
+                            "westeurope"
+                        ]
+                    }
+                },
+                "policyRule": {
+                    "if": {
+                        "not": {
+                            "field": "location",
+                            "in": "[[parameters('allowedLocations')]"
+                        }
+                    },
+                    "then": {
+                        "effect": "deny"
+                    }
+                }
+            }
+        }
+    ]
+}

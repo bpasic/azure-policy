@@ -1,11 +1,12 @@
+### POLICY
 # Create policy definition 1
 $definition1Params = @{
   Name        = "DenyVMSku"
   DisplayName = "Deny VM SKU"
   Description = "Deny specific virtual machine SKU"
   Metadata    = '{"category":"Compute"}'
-  Parameter   = "policy-1-parameters.json"
-  Policy      = "policy-1-rule.json"
+  Parameter   = "./deny-vm-sku/azurepolicy.parameters.json"
+  Policy      = "./deny-vm-sku/azurepolicy.rules.json"
 }
 
 $definition1 = New-AzPolicyDefinition @definition1Params
@@ -16,12 +17,13 @@ $definition2Params = @{
   DisplayName = "Allowed locations"
   Description = "Restrict locations allowed for deployments"
   Metadata    = '{"category":"Compute"}'
-  Parameter   = "policy-2-parameters.json"
-  Policy      = "policy-2-rule.json"
+  Parameter   = "./allowed-locations/azurepolicy.parameters.json"
+  Policy      = "./allowed-locations/azurepolicy.rules.json"
 }
 
 $definition2 = New-AzPolicyDefinition @definition2Params
 
+### POLICY SET
 # Create initiative parameters
 $policyParameters = @"
 {
@@ -83,8 +85,10 @@ $initiativeParams = @{
 
 $initiative = New-AzPolicySetDefinition @initiativeParams
 
-# Define allowed locations
-$allowedLocationsList = @('northeurope', 'westeurope')
+### ASSIGNMENT
+# Define values for SKU name and allowed locations
+$skuNameValue = 'Standard_H*'
+$allowedLocationsValue = @('northeurope', 'westeurope')
 
 # Assign initiave to the subscription
 $assignParams = @{
@@ -92,8 +96,8 @@ $assignParams = @{
   DisplayName           = "Contoso governance initiative"
   Scope                 = "/subscriptions/$((Get-AzContext).Subscription.Id)"
   PolicyParameterObject = @{
-    'init_skuName' = 'Standard_H*'
-    'init_allowedLocations' = $allowedLocationsList
+    'init_skuName' = $skuNameValue
+    'init_allowedLocations' = $allowedLocationsValue
   }
   PolicySetDefinition   = $initiative
 }

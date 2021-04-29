@@ -1,0 +1,18 @@
+[
+    {
+        "policyDefinitionId": "/subscriptions/1d721400-fd3c-4aa7-bf9e-908c913cc8f3/providers/Microsoft.Authorization/policyDefinitions/AllowedLocations",
+        "parameters": {
+            "allowedLocations": {
+                "value": "[parameters('init_allowedLocations')]"
+            }
+        }
+    },
+    {
+        "policyDefinitionId": "/subscriptions/1d721400-fd3c-4aa7-bf9e-908c913cc8f3/providers/Microsoft.Authorization/policyDefinitions/DenyVMSku",
+        "parameters": {
+            "skuName": {
+                "value": "[parameters('init_skuName')]"
+            }
+        }
+    }
+]
