@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "policyDefinitionSetId": {
+            "type": "string",
+            "metadata": {
+                "description": "ID of the 'Contoso Governance Initiative'"
+            }
+        },
+        "skuNameValue": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the virtual machine SKU."
+            }
+        },
+        "allowedLocationsValue": {
+            "type": "array",
+            "metadata": {
+                "description": "Provide the Azure locations to allow."
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "ContosoGovernance",
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2019-09-01",
+            "properties": {
+                "displayName": "Contoso governance initiative",
+                "description": "Assign the Contoso governance initiative",
+                "metadata": {
+                    "assignedBy": "Cloud Center of Excellence"
+                },
+                "notScopes": [],
+                "policyDefinitionId": "[parameters('policyDefinitionSetId')]",
+                "parameters": {
+                    "init_skuName": {
+                        "value": "[parameters('skuNameValue')]"
+                    },
+                    "init_allowedLocations": {
+                        "value": "[parameters('allowedLocationsValue')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

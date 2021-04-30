@@ -1,0 +1,78 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "policyDefinition1Id": {
+            "type": "string",
+            "metadata": {
+                "description": "ID of the 'Deny VM SKU' Policy definition."
+            }
+        },
+        "policyDefinition2Id": {
+            "type": "string",
+            "metadata": {
+                "description": "ID of the 'Allowed locations' Policy definition."
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "ContosoGovernance",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "apiVersion": "2019-09-01",
+            "properties": {
+                "policyType": "Custom",
+                "displayName": "Contoso Governance Initiative",
+                "description": "Contoso governance for VM SKUs and allowed locations",
+                "metadata": {
+                    "category": "Compute"
+                },
+                "parameters": {
+                    "init_skuName": {
+                        "type": "string",
+                        "metadata": {
+                            "displayName": "SKU Name",
+                            "description": "Name of the virtual machine SKU"
+                        }
+                    },
+                    "init_allowedLocations": {
+                        "type": "array",
+                        "metadata": {
+                            "description": "The list of locations that can be specified when deploying resources",
+                            "strongType": "location",
+                            "displayName": "Allowed locations"
+                        },
+                        "allowedValues": [
+                            "westeurope",
+                            "northeurope"
+                        ],
+                        "defaultValue": [
+                            "westeurope"
+                        ]
+                    }
+                },
+                "policyDefinitions": [
+                    {
+                        "policyDefinitionId": "[parameters('policyDefinition1Id')]",
+                        "parameters": {
+                            "skuName": {
+                                "value": "[[parameters('init_skuName')]"
+                            }
+                        }
+                    },
+                    {
+                        "policyDefinitionId": "[parameters('policyDefinition2Id')]",
+                        "parameters": {
+                            "allowedLocations": {
+                                "value": "[[parameters('init_allowedLocations')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}

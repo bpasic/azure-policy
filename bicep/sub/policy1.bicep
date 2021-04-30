@@ -1,16 +1,15 @@
 targetScope = 'subscription'
 
-@description('Name of the Policy definition')
-param policyDefinitionName string
-
-@description('Name of the virtual machine SKU')
-param vmSku object
-
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2019-09-01' = {
-  name: policyDefinitionName
+  name: 'DenyVMSku'
   properties: {
     policyType: 'Custom'
     mode: 'All'
+    displayName: 'Deny VM SKU'
+    description: 'Deny specific virtual machine SKU'
+    metadata: {
+      category: 'Compute'
+    }
     parameters: {
       skuName: {
         type: 'String'
@@ -38,16 +37,4 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2019-09-01'
       }
     }
   }
-}
-
-resource policyAssignment 'Microsoft.Authorization/policyAssignments@2019-09-01' = {
-  name: 'deny-vm-sku'
-  properties: {
-    scope: subscription().id
-    policyDefinitionId: subscriptionResourceId('Microsoft.Authorization/policyDefinitions', policyDefinitionName)
-    parameters: vmSku
-  }
-  dependsOn: [
-    policyDefinition
-  ]
 }

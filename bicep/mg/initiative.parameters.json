@@ -1,0 +1,12 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "policyDefinition1Id": {
+            "value": "/providers/Microsoft.Management/managementGroups/Landing-zones/providers/Microsoft.Authorization/policyDefinitions/DenyVMSku"
+        },
+        "policyDefinition2Id": {
+            "value": "/providers/Microsoft.Management/managementGroups/Landing-zones/providers/Microsoft.Authorization/policyDefinitions/AllowedLocations"
+        }
+    }
+}
